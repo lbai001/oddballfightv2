@@ -1,0 +1,3 @@
+[run]
+source = obf
+omit = obf/test*
