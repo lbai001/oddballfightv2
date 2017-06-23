@@ -15,8 +15,7 @@ from ..models import (
     get_session_factory,
     get_tm_session,
 )
-from ..models import MyModel
-from ..models import Character
+from ..models import MyModel, Character, Skill
 
 
 def usage(argv):
@@ -35,7 +34,7 @@ def main(argv=sys.argv):
     settings = get_appsettings(config_uri, options=options)
 
     engine = get_engine(settings)
-    Base.metadata.drop_all(engine)
+    # Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
 
     session_factory = get_session_factory(engine)
@@ -43,11 +42,20 @@ def main(argv=sys.argv):
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
 
-        model = MyModel(name='one', value=1, test=2)
-        dbsession.add(model)
-        dbsession.add_all([
-            Character(name='travis', level=0,
-                      hp=20, mp=10, exp=0, score=0),
-            Character(name='xiaolu', level=0, hp=200, mp=300, exp=0, score=0),
-            Character(name='rob', level=0, hp=15, mp=15, exp=0, score=0)
-        ])
+        # model = MyModel(name='one', value=1, test=2)
+        # dbsession.add(model)
+        travis = Character(name='travis', level=0,
+                           hp=20, mp=10, exp=0, score=0)
+        travis_skill_1 = Skill(name='Attack', dmg=1, mpc=0, player=travis)
+        travis_skill_2 = Skill(name='Poke', dmg=2, mpc=2, player=travis)
+        travis_skill_3 = Skill(name='OpenRA', dmg=4, mpc=4, player=travis)
+        dbsession.add(travis)
+        dbsession.add(travis_skill_1)
+        dbsession.add(travis_skill_2)
+        dbsession.add(travis_skill_3)
+        rob = Character(name='rob', level=0, hp=15, mp=15, exp=0, score=0)
+        xiaolu = Character(name='xiaolu', level=0, hp=200,
+                           mp=300, exp=0, score=0)
+
+        dbsession.add(rob)
+        dbsession.add(xiaolu)

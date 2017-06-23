@@ -3,6 +3,7 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
+    orm
 )
 
 from .meta import Base
@@ -17,6 +18,7 @@ class Character(Base):
     mp = Column(Integer)
     exp = Column(Integer)
     score = Column(Integer)
+    skills = orm.relationship('Skill')
 
     def hi(self):
         print (self.name)

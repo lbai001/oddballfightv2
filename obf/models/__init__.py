@@ -7,6 +7,8 @@ import zope.sqlalchemy
 # Base.metadata prior to any initialization routines
 from .mymodel import MyModel  # flake8: noqa
 from .characters import Character
+from .skills import Skill
+from .game import Game
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup
 configure_mappers()
